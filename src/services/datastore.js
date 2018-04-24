@@ -1,6 +1,5 @@
 import firebase from 'firebase';
 
-
 // Initialize Firebase
 const config = {
   apiKey: 'AIzaSyAaUWEdDfCj7cjT9cNVhSE3BpFU02vKdgo',
@@ -13,7 +12,6 @@ const config = {
 firebase.initializeApp(config);
 
 const database = firebase.database();
-
 
 export function addNoteFB(titleName, textName) {
   const note = {
@@ -38,7 +36,6 @@ export function deleteNoteFB(id) {
 export function fetchNotes(callback) {
   firebase.database().ref('notes').on('value', (snapshot) => {
     const newNoteState = snapshot.val();
-    console.log(newNoteState);
     // do something with new note state
     callback(newNoteState);
   });

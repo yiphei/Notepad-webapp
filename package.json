@@ -10,7 +10,7 @@
     "start": "NODE_ENV=development webpack-serve ./webpack.config.js",
     "build": "yarn clean; NODE_ENV=production webpack --colors",
     "clean": "rimraf dist",
-    "deploy": "yarn build; surge -p dist -d freshandcool.surge.sh; yarn clean"
+    "deploy": "yarn build; surge -p dist -d googledoctor.surge.sh; yarn clean"
   },
   "devDependencies": {
     "autoprefixer": "^8.3.0",

@@ -41,7 +41,6 @@ class App extends Component {
     db.deleteNoteFB(id);
   }
 
-
   renderNotes = () => {
     return this.state.notes.entrySeq().map(([id, note]) => {
       return (
@@ -49,7 +48,6 @@ class App extends Component {
       );
     });
   }
-
 
   render() {
     return (

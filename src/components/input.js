@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 class Input extends Component {
   constructor(props) {
     super(props);
-    this.state = { title: '', currentID: 1 };
+    this.state = { title: '' };
   }
 
   onInputChange = (event) => {
@@ -15,14 +15,13 @@ class Input extends Component {
     console.log(`new node added with id:${this.state.currentID}`);
     const note = {
       title: this.state.title,
-      text: 'HELLOOO',
+      text: 'Text',
       x: 400,
       y: 12,
       zIndex: 26,
     };
     this.props.onNewNote(note);
   }
-
 
   render() {
     return (
