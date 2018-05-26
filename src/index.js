@@ -5,11 +5,20 @@ import Immutable from 'immutable';
 import Note from './components/note';
 import Input from './components/input';
 import './style.scss';
-import * as db from './services/datastore';
+// import * as db from './services/datastore';
+import io from 'socket.io-client';
+
+const socketserver = 'http://localhost:9090';
 
 class App extends Component {
   constructor(props) {
     super(props);
+
+    this.socket = io(socketserver);
+    this.socket.on('connect', () => { console.log('socket.io connected'); });
+    this.socket.on('disconnect', () => { console.log('socket.io disconnected'); });
+    this.socket.on('reconnect', () => { console.log('socket.io reconnected'); });
+    this.socket.on('error', (error) => { console.log(error); });
 
     this.state = {
       notes: Immutable.Map(),
@@ -17,7 +26,9 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-    db.fetchNotes((notes) => {
+    this.socket.on('notes', (notes) => {
+      // where you handle all the setState and immutable stuff
+      // keep this
       this.setState({ notes: Immutable.Map(notes) });
     });
   }
@@ -27,18 +38,27 @@ class App extends Component {
     // this.setState({
     //   notes: this.state.notes.set(id, note),
     // });
-    db.addNoteFB(note.title, note.text);
+
+    // db.addNoteFB(note.title, note.text);
+
+    this.socket.emit('createNote', note);
   }
 
   update = (id, fields) => {
     // this.setState({
     //   notes: this.state.notes.update(id, (n) => { return Object.assign({}, n, fields); }),
     // });
-    db.updateNoteFB(id, Object.assign({}, this.state.notes.id, fields));
+
+    // db.updateNoteFB(id, Object.assign({}, this.state.notes.id, fields));
+
+
+    this.socket.emit('updateNote', id, Object.assign({}, this.state.notes.id, fields));
   }
 
   delete = (id) => {
-    db.deleteNoteFB(id);
+    this.socket.emit('deleteNote', id);
+
+    // db.deleteNoteFB(id);
   }
 
   renderNotes = () => {
