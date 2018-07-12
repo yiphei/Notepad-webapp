@@ -1,4 +1,4 @@
-# Notepad
+# Notepad (with Firebase)
 ## Yifei Yan
 
 
